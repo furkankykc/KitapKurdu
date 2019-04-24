@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:outputStylesheet library="css" name="bootstrap.css"/>
+    <h:head>
+        <title>YAZAR</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="/template/layout.xhtml">
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h:form id="ajax-table">
+                                <h:dataTable  value="#{yazarController.getaList()}" var="ayazar" styleClass="table table-stripped">
+                                    <h:column>
+                                        <f:facet name="header">ID</f:facet>
+                                            #{ayazar.id}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">ADİ</f:facet>
+                                        <h:commandLink action="#{yazarController.updateForm(ayazar)}" value="#{ayazar.adi}">
+                                            <f:ajax execute="@this" render="template-form:ajax-form"/>
+                                        </h:commandLink>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">DOGUM YERI</f:facet>
+                                            #{ayazar.dogumYeri}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">DOGUM TARIHI</f:facet>
+                                            #{ayazar.dogumTarihi}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">BIYOGRAFI</f:facet>
+                                            #{ayazar.biyografi}
+                                    </h:column>
+
+
+
+                                    <h:column>
+                                        <f:facet name="header">DELETE</f:facet>
+                                        <h:commandButton styleClass="btn btn-danger" action="#{yazarController.deleteConfirm(ayazar)}" value="Delete" />
+                                    </h:column>
+                                </h:dataTable>
+                            </h:form>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <h:form id="ajax-form">
+                                <div class="form-group">
+
+                                    <label for="inputName">Yazar Adi</label>
+                                    <h:inputText styleClass="form-control" value="#{yazarController.yazar.adi}"/> <br/>
+
+                                    <label for="inputName">Yazar Doğum Yeri</label>
+                                    <h:inputText styleClass="form-control" value="#{yazarController.yazar.dogumYeri}"/> <br/>
+
+
+                                    <label for="inputName">Yazar Doğum Tarihi</label>
+                   <!--                  <h:inputText styleClass="form-control" value="#{yazarController.yazar.dogumTarihi}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:inputText>
+                                    -->      <p:calendar id="inline" value="#{yazarController.yazar.dogumTarihi}"  mode="inline" />
+                                    <br/>
+
+                                    <label for="inputName">Yazar Biyografi</label>
+                                    <h:inputText styleClass="form-control" value="#{yazarController.yazar.biyografi}"/> <br/>
+
+
+
+                                </div>
+                                <div class="form-group">
+                                    <h:commandButton styleClass="btn btn-primary" rendered="#{yazarController.yazar.id!=0}" value="Update" action="#{yazarController.update}">
+                                        <f:ajax execute="ajax-form" render="template-form"/>
+                                    </h:commandButton>
+                                    <h:commandButton styleClass="btn btn-primary" rendered="#{yazarController.yazar.id==0}" value="Create" action="#{yazarController.create}">
+                                        <f:ajax execute="ajax-form" render="template-form"/>
+                                    </h:commandButton>
+                                    <h:commandButton styleClass="btn btn-secondary" rendered="#{yazarController.yazar.id!=0}" value="Clear" action="#{yazarController.clearForm}">
+                                        <f:ajax execute="ajax-form" render="template-form"/>
+                                    </h:commandButton>
+                                </div>
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

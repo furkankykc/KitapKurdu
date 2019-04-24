@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:outputStylesheet library="css" name="bootstrap.css"/>
+    <h:head>
+        <title>KOLON</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/layout.xhtml">
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h:form id="ajax-table">
+                                <h:dataTable  value="#{kolonController.getaList()}" var="aKolon" styleClass="table table-stripped">
+                                    <h:column>
+                                        <f:facet name="header">ID</f:facet>
+                                            #{aKolon.id}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">NUMARA</f:facet>
+                                        <h:commandLink action="#{kolonController.updateForm(aKolon)}" value="#{aKolon.numara}">
+                                            <f:ajax execute="@this" render="template-form:ajax-form"/>
+                                        </h:commandLink>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Raf</f:facet>
+                                            #{aKolon.raf.numara}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">DELETE</f:facet>
+                                        <h:commandButton styleClass="btn btn-danger" action="#{kolonController.delete(aKolon)}" value="Delete" />
+                                    </h:column>
+                                </h:dataTable>
+                            </h:form>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <h:form id="ajax-form">
+                                <div class="form-group">
+                                    <h:inputHidden value="#{kolonController.kolon.id}"/>
+                                    <label for="inputName">Kolon Numara</label>
+                                    <h:inputText styleClass="form-control" value="#{kolonController.kolon.numara}"/> <br/>
+                                    <label for="inputName">Raf</label>
+                                    <h:selectOneMenu styleClass="custom-select" value="#{kolonController.kolon.raf}" converter="rafConverter">
+                                        <f:selectItems value="#{rafController.getaList()}" var="raf" itemValue="#{raf}" itemLabel="#{raf.numara}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="form-group">
+                                    <h:commandButton styleClass="btn btn-primary" rendered="#{kolonController.kolon.id!=0}" value="Update" action="#{kolonController.update}">
+                                        <f:ajax execute="ajax-form" render="template-form"/>
+                                    </h:commandButton>
+                                    <h:commandButton styleClass="btn btn-primary" rendered="#{kolonController.kolon.id==0}" value="Create" action="#{kolonController.create}">
+                                        <f:ajax execute="ajax-form" render="template-form"/>
+                                    </h:commandButton>
+                                    <h:commandButton styleClass="btn btn-secondary" rendered="#{kolonController.kolon.id!=0}" value="Clear" action="#{kolonController.clearForm}">
+                                        <f:ajax execute="ajax-form" render="template-form"/>
+                                    </h:commandButton>
+                                </div>
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

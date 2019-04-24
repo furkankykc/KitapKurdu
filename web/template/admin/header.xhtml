@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?> 
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <body>
+
+        <ui:composition>
+            <nav class="navbar navbar-light bg-faded">
+                <a class="navbar-brand" href="/KitapKurdu/faces/admin/index.xhtml">
+                    KITAP KURDU
+                </a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/depo/depo.xhtml">DEPO</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/raf/raf.xhtml">RAF</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/kolon/kolon.xhtml">KOLON</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/grup/grup.xhtml">GRUP</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/kisi/kisi.xhtml">KISI</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/kategori/kategori.xhtml">KATEGORI</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/tur/tur.xhtml">TUR</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/yayinEvi/yayinEvi.xhtml">YAYINEVI</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/yazar/yazar.xhtml">YAZAR</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/yayin/yayin.xhtml">YAYIN</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/kullanici/kullanici.xhtml">KULLANICI</a>
+                <a  class="navbar-brand" href="/KitapKurdu/faces/admin/dosya/dosya.xhtml">DOSYA</a>
+
+                <c:if test="#{!kullaniciController.isLoggedin()}">
+                    <a class="navbar-right" href="/KitapKurdu/faces/login.xhtml" >
+                        Login
+                    </a>                
+                </c:if>
+                <c:if test="#{kullaniciController.type}">
+                    <a class="navbar-right">
+                        <h:commandLink action="#{kullaniciController.site()}" value="Site"/>
+
+                    </a>
+                </c:if>
+                <c:if test="#{kullaniciController.isLoggedin()}">
+                    <a class="navbar-right">
+                    #{session.getAttribute("userid")}
+                        <h:commandLink action="#{kullaniciController.logout()}" value="Logout"/>
+
+                    </a>
+                </c:if>
+            </nav>
+        </ui:composition>
+    </body>
+</html>
